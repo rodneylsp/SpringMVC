@@ -56,6 +56,9 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- teste comentario -->
+        <!-- mais um comentario -->
+
     </dependencies>
 
     <build>
