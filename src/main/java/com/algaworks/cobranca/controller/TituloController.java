@@ -20,6 +20,11 @@ public class TituloController {
     @Autowired
     private Titulos repository;
 
+    @RequestMapping
+    public String pesquisar(){
+        return "PesquisaTitulos";
+    }
+
     @RequestMapping("/novo")
     public ModelAndView novo(){
 
