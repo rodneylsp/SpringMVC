@@ -21,8 +21,12 @@ public class TituloController {
     private Titulos repository;
 
     @RequestMapping
-    public String pesquisar(){
-        return "PesquisaTitulos";
+    public ModelAndView pesquisar(){
+
+        List<Titulo> titulosList = repository.findAll();
+        ModelAndView mv = new ModelAndView("PesquisaTitulos");
+        mv.addObject("titulos", titulosList);
+        return mv;
     }
 
     @RequestMapping("/novo")
