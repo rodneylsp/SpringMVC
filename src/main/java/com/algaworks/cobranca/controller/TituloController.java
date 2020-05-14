@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,6 +24,8 @@ public class TituloController {
     @Autowired
     private Titulos repository;
 
+    private static final String CADASTRO_VIEW = "CadastroTitulo";
+
     @RequestMapping
     public ModelAndView pesquisar(){
 
@@ -35,7 +38,7 @@ public class TituloController {
     @RequestMapping("/novo")
     public ModelAndView novo(){
 
-        ModelAndView mv = new ModelAndView("CadastroTitulo");
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject(new Titulo());
         return  mv;
     }
@@ -45,13 +48,24 @@ public class TituloController {
         //spring retorna os erros de validacao no objeto errors
 
         if(errors.hasErrors()){
-            return "CadastroTitulo";
+            return "CADASTRO_VIEW";
         }
 
         repository.save(titulo);
         attributes.addFlashAttribute("mensagem", "Título salvo com sucesso");
 
         return "redirect:/titulos/novo";
+    }
+
+    @RequestMapping("{id}")
+    public ModelAndView edicao(@PathVariable("id") Titulo titulo){
+
+        //Colocando o PathVariable("[nome do campo]") Objeto, o spring ja associa a um findOne do repository
+        //Titulo titulo = repository.findOne(id);
+
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+        mv.addObject(titulo);
+        return mv;
     }
 
     @ModelAttribute("todosStatusTitulo")
