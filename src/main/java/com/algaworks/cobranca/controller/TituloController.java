@@ -48,11 +48,11 @@ public class TituloController {
         //spring retorna os erros de validacao no objeto errors
 
         if(errors.hasErrors()){
-            return "CADASTRO_VIEW";
+            return CADASTRO_VIEW;
         }
 
         repository.save(titulo);
-        attributes.addFlashAttribute("mensagem", "Título salvo com sucesso");
+        attributes.addFlashAttribute("mensagem", "Título salvo com sucesso!");
 
         return "redirect:/titulos/novo";
     }
@@ -66,6 +66,14 @@ public class TituloController {
         ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject(titulo);
         return mv;
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public String excluir(@PathVariable Long id, RedirectAttributes attributes){
+
+        repository.delete(id);
+        attributes.addFlashAttribute("mensagem", "Título excluido com sucesso!");
+        return "redirect:/titulos";
     }
 
     @ModelAttribute("todosStatusTitulo")
